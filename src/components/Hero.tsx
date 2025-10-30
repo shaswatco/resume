@@ -30,7 +30,7 @@ export function Hero() {
         </h1>
 
         <p className="text-lg sm:text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
-          Outskill uses AI to transform your generic CV into role-specific, ATS-optimized resumes that actually get noticed by recruiters.
+          RefineCV uses AI to transform your generic CV into role-specific, ATS-optimized resumes that actually get noticed by recruiters.
         </p>
 
         <button

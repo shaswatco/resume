@@ -199,7 +199,7 @@ export function AdminDashboard() {
               <h3 className="text-lg font-bold text-white mb-2">Step 1: Create Your Google Sheet</h3>
               <ol className="list-decimal list-inside space-y-1 text-sm">
                 <li>Go to Google Sheets and create a new spreadsheet</li>
-                <li>Name it "Outskill Waitlist"</li>
+                <li>Name it "RefineCV Waitlist"</li>
                 <li>Add these headers in Row 1: Email, Submitted At, ID, Timestamp</li>
               </ol>
             </div>

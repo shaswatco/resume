@@ -19,7 +19,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-2xl font-black text-white mb-2">Outskill</h3>
+            <h3 className="text-2xl font-black text-white mb-2">RefineCV</h3>
             <p className="text-gray-400 mb-4">by PlaceRight</p>
             <p className="text-gray-300 text-sm leading-relaxed">
               Built for Students, By Students

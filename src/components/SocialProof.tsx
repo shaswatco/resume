@@ -11,7 +11,7 @@ export function SocialProof() {
     {
       name: 'Rahul M.',
       role: 'Consultant, Big 4',
-      content: 'I thought my resume was good. Outskill showed me it was just average. Now I\'m getting headhunter calls.',
+      content: 'I thought my resume was good. RefineCV showed me it was just average. Now I\'m getting headhunter calls.',
       rating: 5
     },
     {

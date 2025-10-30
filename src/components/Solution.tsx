@@ -33,7 +33,7 @@ export function Solution() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F1C2A] mb-6">
-            How Outskill Gets You Shortlisted
+            How RefineCV Gets You Shortlisted
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Stop playing the numbers game. Start getting results.
