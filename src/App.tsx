@@ -1,7 +1,25 @@
+import { Hero } from './components/Hero';
+import { Problem } from './components/Problem';
+import { Solution } from './components/Solution';
+import { Process } from './components/Process';
+import { TargetAudience } from './components/TargetAudience';
+import { Pricing } from './components/Pricing';
+import { WaitlistForm } from './components/WaitlistForm';
+import { SocialProof } from './components/SocialProof';
+import { Footer } from './components/Footer';
+
 function App() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <p>Start prompting (or editing) to see magic happen :)</p>
+    <div className="min-h-screen">
+      <Hero />
+      <Problem />
+      <Solution />
+      <Process />
+      <TargetAudience />
+      <Pricing />
+      <WaitlistForm />
+      <SocialProof />
+      <Footer />
     </div>
   );
 }
