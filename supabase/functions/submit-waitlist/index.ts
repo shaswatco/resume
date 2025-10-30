@@ -61,6 +61,26 @@ Deno.serve(async (req: Request) => {
       throw error;
     }
 
+    const makeWebhookUrl = Deno.env.get('MAKE_WEBHOOK_URL');
+    if (makeWebhookUrl && data) {
+      try {
+        await fetch(makeWebhookUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: data.email,
+            id: data.id,
+            created_at: data.created_at,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (webhookError) {
+        console.error('Webhook error:', webhookError);
+      }
+    }
+
     const { count } = await supabase
       .from('waitlist_submissions')
       .select('*', { count: 'exact', head: true });
