@@ -37,7 +37,7 @@ export function Hero() {
           onClick={scrollToForm}
           className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#2762ea] to-[#5b8ef7] text-white text-lg font-bold rounded-full hover:shadow-2xl hover:shadow-[#2762ea]/50 transition-all duration-300 hover:scale-105"
         >
-          Get Free Resume Audit
+          Get Shortlisted
           <ArrowDown className="w-5 h-5 group-hover:animate-bounce" />
         </button>
 

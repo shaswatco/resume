@@ -19,11 +19,11 @@ Deno.serve(async (req: Request) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    const { full_name, email, current_status, institution } = await req.json();
+    const { email } = await req.json();
 
-    if (!full_name || !email) {
+    if (!email) {
       return new Response(
-        JSON.stringify({ error: 'Full name and email are required' }),
+        JSON.stringify({ error: 'Email is required' }),
         {
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -44,21 +44,14 @@ Deno.serve(async (req: Request) => {
 
     const { data, error } = await supabase
       .from('waitlist_submissions')
-      .insert([
-        {
-          full_name,
-          email: email.toLowerCase(),
-          current_status: current_status || '',
-          institution: institution || '',
-        },
-      ])
+      .insert([{ email: email.toLowerCase() }])
       .select()
       .maybeSingle();
 
     if (error) {
       if (error.code === '23505') {
         return new Response(
-          JSON.stringify({ error: 'This email is already registered' }),
+          JSON.stringify({ error: 'This email is already on the waitlist' }),
           {
             status: 409,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -68,16 +61,16 @@ Deno.serve(async (req: Request) => {
       throw error;
     }
 
-    const { data: countData } = await supabase
+    const { count } = await supabase
       .from('waitlist_submissions')
-      .select('id', { count: 'exact', head: true });
+      .select('*', { count: 'exact', head: true });
 
     return new Response(
       JSON.stringify({
         success: true,
         message: 'Successfully joined the waitlist',
         data,
-        waitlist_count: countData || 0,
+        waitlist_count: count || 0,
       }),
       {
         status: 201,

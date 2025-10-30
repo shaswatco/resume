@@ -1,13 +1,8 @@
 import { useState, FormEvent, useEffect } from 'react';
-import { Mail, User, Loader2, CheckCircle2 } from 'lucide-react';
+import { Mail, Loader2, CheckCircle2 } from 'lucide-react';
 
 export function WaitlistForm() {
-  const [formData, setFormData] = useState({
-    full_name: '',
-    email: '',
-    current_status: '',
-    institution: ''
-  });
+  const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
@@ -43,15 +38,15 @@ export function WaitlistForm() {
     setSubmitStatus('idle');
     setErrorMessage('');
 
-    if (!formData.email || !formData.full_name) {
-      setErrorMessage('Please fill in all required fields');
+    if (!email) {
+      setErrorMessage('Please enter your email address');
       setIsSubmitting(false);
       setSubmitStatus('error');
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
+    if (!emailRegex.test(email)) {
       setErrorMessage('Please enter a valid email address');
       setIsSubmitting(false);
       setSubmitStatus('error');
@@ -66,7 +61,7 @@ export function WaitlistForm() {
           'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({ email })
       });
 
       const data = await response.json();
@@ -76,12 +71,7 @@ export function WaitlistForm() {
       }
 
       setSubmitStatus('success');
-      setFormData({
-        full_name: '',
-        email: '',
-        current_status: '',
-        institution: ''
-      });
+      setEmail('');
       setWaitlistCount(data.waitlist_count || waitlistCount + 1);
     } catch (error: any) {
       setSubmitStatus('error');
@@ -103,10 +93,10 @@ export function WaitlistForm() {
       <div className="relative z-10 max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4">
-            Join {waitlistCount.toLocaleString()}+ Students on the Waitlist
+            Get Shortlisted
           </h2>
           <p className="text-lg text-gray-300">
-            Get early access and exclusive benefits
+            Join {waitlistCount.toLocaleString()}+ students. Enter your email for early access.
           </p>
         </div>
 
@@ -114,36 +104,18 @@ export function WaitlistForm() {
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-white/20 text-center">
             <CheckCircle2 className="w-16 h-16 text-green-400 mx-auto mb-6" />
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-              You're In!
+              You're Shortlisted!
             </h3>
             <p className="text-gray-300 text-lg">
-              Check your email for your free audit checklist.
+              Check your email for next steps and early access details.
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 sm:p-12 border border-white/20">
             <div className="space-y-6">
               <div>
-                <label htmlFor="full_name" className="block text-white font-bold mb-2">
-                  Full Name <span className="text-red-400">*</span>
-                </label>
-                <div className="relative">
-                  <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    type="text"
-                    id="full_name"
-                    required
-                    value={formData.full_name}
-                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-                    className="w-full pl-12 pr-4 py-4 bg-white rounded-xl text-[#0F1C2A] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2762ea] text-lg"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-white font-bold mb-2">
-                  Email Address <span className="text-red-400">*</span>
+                <label htmlFor="email" className="block text-white font-bold mb-2 text-center">
+                  Email Address
                 </label>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -151,45 +123,12 @@ export function WaitlistForm() {
                     type="email"
                     id="email"
                     required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-12 pr-4 py-4 bg-white rounded-xl text-[#0F1C2A] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2762ea] text-lg"
                     placeholder="your.email@example.com"
                   />
                 </div>
-              </div>
-
-              <div>
-                <label htmlFor="current_status" className="block text-white font-bold mb-2">
-                  Current Status
-                </label>
-                <select
-                  id="current_status"
-                  value={formData.current_status}
-                  onChange={(e) => setFormData({ ...formData, current_status: e.target.value })}
-                  className="w-full px-4 py-4 bg-white rounded-xl text-[#0F1C2A] focus:outline-none focus:ring-2 focus:ring-[#2762ea] text-lg"
-                >
-                  <option value="">Select your status</option>
-                  <option value="MBA Student">MBA Student</option>
-                  <option value="UG Student">UG Student</option>
-                  <option value="Working Professional">Working Professional</option>
-                  <option value="Career Break">Career Break</option>
-                  <option value="Other">Other</option>
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor="institution" className="block text-white font-bold mb-2">
-                  Institution/Company
-                </label>
-                <input
-                  type="text"
-                  id="institution"
-                  value={formData.institution}
-                  onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                  className="w-full px-4 py-4 bg-white rounded-xl text-[#0F1C2A] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#2762ea] text-lg"
-                  placeholder="Where do you study/work?"
-                />
               </div>
 
               {submitStatus === 'error' && errorMessage && (
@@ -209,12 +148,12 @@ export function WaitlistForm() {
                     Joining...
                   </>
                 ) : (
-                  'Get Early Access'
+                  'Get Shortlisted'
                 )}
               </button>
 
               <p className="text-gray-400 text-sm text-center">
-                By joining, you agree to receive updates about Outskill
+                Join the waitlist • Get early access • No spam, ever
               </p>
             </div>
           </form>
