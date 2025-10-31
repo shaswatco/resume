@@ -7,7 +7,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0F1C2A] via-[#1a2a3a] to-[#0F1C2A]">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#0F1C2A] via-[#1a2a3a] to-[#0F1C2A] pt-20">
       <div className="absolute inset-0 opacity-10">
         <div className="absolute inset-0" style={{
           backgroundImage: 'radial-gradient(circle, #2762ea 1px, transparent 1px)',
